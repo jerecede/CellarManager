@@ -8,5 +8,15 @@ namespace CellarManager.model
 {
     internal class Wine: Beverage
     {
+        public TypeWine Type { get; set; }
+        public string Region { get; set; }
+        public int Year { get; set; }
+
+        public Wine(string name, double degree, TypeWine type, string region, int year) : base(name, degree)
+        {
+            Type = type;
+            Region = region;
+            Year = year;
+        }
     }
 }

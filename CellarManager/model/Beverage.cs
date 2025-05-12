@@ -8,5 +8,13 @@ namespace CellarManager.model
 {
     internal abstract class Beverage
     {
+        public string Name { get; set; }
+        public double Degree { get; set; }
+
+        protected Beverage(string name, double degree)
+        {
+            Name = name;
+            Degree = degree;
+        }
     }
 }
