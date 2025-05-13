@@ -16,5 +16,10 @@ namespace CellarManager.model
             Name = name;
             Degree = degree;
         }
+
+        public override string ToString()
+        {
+            return $"{Name} - {Degree}°";
+        }
     }
 }

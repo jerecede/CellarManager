@@ -33,10 +33,12 @@ namespace CellarManager
                         AddBeerGui();
                         break;
                     case "2":
-                        //AddWineGui();
+                        Console.Clear();
+                        AddWineGui();
                         break;
                     case "3":
-                        //GetAllBeveragesGui();
+                        Console.Clear();
+                        GetBeveragesGui();
                         break;
                     case "4":
                         Environment.Exit(0);
@@ -50,7 +52,7 @@ namespace CellarManager
 
         internal void AddBeerGui()
         {
-            Console.WriteLine("---------------\n| Adding Beer |\n---------------\n");
+            Console.WriteLine("----------------------\n|     Adding Beer     |\n----------------------\n");
 
             while (true)
             {
@@ -59,7 +61,7 @@ namespace CellarManager
                 TypeBeer type = TypeBeer.Chiara;
                 FormatBeer format = FormatBeer.Draft;
 
-                Console.WriteLine("|| Name ||");
+                Console.WriteLine("||       Name        ||");
                 Console.WriteLine("Insert");
                 while (true)
                 {
@@ -138,8 +140,10 @@ namespace CellarManager
                 }
                 while (formatStr != "1" && formatStr != "2");
 
-                Console.WriteLine("||   Your Confirm    ||");
-                Console.WriteLine($"Name: {name}, Alcoholic Degree: {degree}%, Type: {type}, Format: {format}");
+                Console.WriteLine("-----------------------");
+                Console.WriteLine("|    Your Confirm     |");
+                Console.WriteLine("-----------------------\n");
+                Console.WriteLine($"Name: {name} - Alcoholic Degree: {degree}% - Type: {type} - Format: {format}\n");
                 Console.WriteLine("[1] Confirm");
                 Console.WriteLine("[2] Cancel");
                 Console.WriteLine("Insert");
@@ -151,6 +155,8 @@ namespace CellarManager
                     {
                         case "1":
                             _logic.AddBeer(name, degree, type, format);
+                            Console.WriteLine("\nDone!");
+                            Console.ReadKey();
                             break;
                         case "2":
                             break;
@@ -162,6 +168,157 @@ namespace CellarManager
 
                 break;
             }
+        }
+
+        internal void AddWineGui()
+        {
+            Console.WriteLine("----------------------\n|     Adding Wine     |\n----------------------\n");
+
+            while (true)
+            {
+                var name = "";
+                double degree = 0.0;
+                TypeWine type = TypeWine.Red;
+                int year = 0;
+                var region = "";
+
+                Console.WriteLine("||       Name        ||");
+                Console.WriteLine("Insert");
+                while (true)
+                {
+                    name = Console.ReadLine();
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        break;
+                    }
+                    Console.WriteLine("Name cannot be empty");
+                }
+
+                Console.WriteLine("|| Alocoholic Degree ||");
+                Console.WriteLine("Insert");
+                while (true)
+                {
+                    var degreeStr = Console.ReadLine();
+
+                    if (double.TryParse(degreeStr, out degree) && !string.IsNullOrEmpty(degreeStr))
+                    {
+                        if (degree >= 0 && degree <= 100)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Degree have to be between 0 - 100");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Degree have to be a number");
+                    }
+                }
+
+                Console.WriteLine("||     Type Wine     ||");
+                Console.WriteLine("[1] White");
+                Console.WriteLine("[2] Red");
+                Console.WriteLine("[3] Rosè");
+                Console.WriteLine("Insert");
+                var typeStr = "";
+                do
+                {
+                    typeStr = Console.ReadLine();
+                    switch (typeStr)
+                    {
+                        case "1":
+                            type = TypeWine.White;
+                            break;
+                        case "2":
+                            type = TypeWine.Red;
+                            break;
+                        case "3":
+                            type = TypeWine.Rose;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                while (typeStr != "1" && typeStr != "2" && typeStr != "3");
+
+                Console.WriteLine("||       Year        ||");
+                Console.WriteLine("Insert");
+                while (true)
+                {
+                    var yearStr = Console.ReadLine();
+
+                    if (int.TryParse(yearStr, out year) && !string.IsNullOrEmpty(yearStr))
+                    {
+                        if (year > 1900)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Year have to be bigger than 1900");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Degree have to be a number");
+                    }
+                }
+
+                Console.WriteLine("||      Region       ||");
+                Console.WriteLine("Insert");
+                while (true)
+                {
+                    region = Console.ReadLine();
+                    if (!string.IsNullOrEmpty(region))
+                    {
+                        break;
+                    }
+                    Console.WriteLine("Name cannot be empty");
+                }
+
+
+                Console.WriteLine("-----------------------");
+                Console.WriteLine("|    Your Confirm     |");
+                Console.WriteLine("-----------------------\n");
+                Console.WriteLine($"Name: {name} - Alcoholic Degree: {degree}% - Type: {type} - Region: {region} - Year: {year}\n");
+                Console.WriteLine("[1] Confirm");
+                Console.WriteLine("[2] Cancel");
+                Console.WriteLine("Insert");
+                var confirm = "";
+                do
+                {
+                    confirm = Console.ReadLine();
+                    switch (confirm)
+                    {
+                        case "1":
+                            _logic.AddWine(name, degree, type, region, year);
+                            Console.WriteLine("\nDone!");
+                            Console.ReadKey();
+                            break;
+                        case "2":
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                while (confirm != "1" && confirm != "2");
+
+                break;
+            }
+        }
+
+        internal void GetBeveragesGui()
+        {
+            Console.WriteLine("----------------\n| All Beverages |\n----------------\n");
+            var beverages = _logic.GetBeverages();
+            foreach (var beverage in beverages)
+            {
+                Console.WriteLine(beverage.ToString());
+            }
+            Console.WriteLine("\nPress any key to exit.");
+            Console.ReadKey();
         }
     }
 }

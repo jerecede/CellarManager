@@ -16,5 +16,10 @@ namespace CellarManager.model
             Type = type;
             Format = format;
         }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()} - {Type} - {Format}";
+        }
     }
 }

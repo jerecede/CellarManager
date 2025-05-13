@@ -11,6 +11,6 @@ namespace CellarManager
     {
         public void SaveAllBeverages(List<Beverage> beverages); //con una lista di Beverage, la salva in un file, sovrascrive
 
-        public void LoadAllBeverages(); //dal file crea una lista di Beverage
+        public List<Beverage> LoadAllBeverages(); //dal file crea una lista di Beverage
     }
 }

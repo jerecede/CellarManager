@@ -11,6 +11,6 @@ namespace CellarManager
     {
         public void AddBeer(string name, double degree, TypeBeer type, FormatBeer format); //passo i parametri di Beer, non istanza intera, cosi non se ne occupa la Tui
         public void AddWine(string name, double degree, TypeWine type, string region, int year);
-        public List<Beverage> GetAllBeverages();
+        public List<Beverage> GetBeverages();
     }
 }

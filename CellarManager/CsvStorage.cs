@@ -9,9 +9,9 @@ namespace CellarManager
 {
     internal class CsvStorage : IStorage
     {
-        public void LoadAllBeverages()
+        public List<Beverage> LoadAllBeverages()
         {
-            throw new NotImplementedException();
+            return [];
         }
 
         public void SaveAllBeverages(List<Beverage> beverages)

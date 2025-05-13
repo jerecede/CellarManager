@@ -18,5 +18,10 @@ namespace CellarManager.model
             Region = region;
             Year = year;
         }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()} - {Type} - {Region} - {Year}";
+        }
     }
 }
