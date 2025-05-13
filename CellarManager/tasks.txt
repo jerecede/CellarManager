@@ -1,0 +1,3 @@
+﻿-funzione delete usando index
+-funzione search, data una stringa, lista di tutte le beverage che contengono quella stringa "dol" => "dolc" "dolcetto"
+-json storage

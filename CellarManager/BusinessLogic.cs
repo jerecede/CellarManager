@@ -15,19 +15,21 @@ namespace CellarManager
         public BusinessLogic(IStorage storage)
         {
             _storage = storage;
-            //Beverages = _storage.LoadAllBeverages();
+            Beverages = _storage.LoadAllBeverages();
         }
 
         public void AddBeer(string name, double degree, TypeBeer type, FormatBeer format)
         {
             var beer = new Beer(name, degree, type, format);
             Beverages.Add(beer);
+            _storage.SaveAllBeverages(Beverages);
         }
 
         public void AddWine(string name, double degree, TypeWine type, string region, int year)
         {
             var wine = new Wine(name, degree, type, region, year);
             Beverages.Add(wine);
+            _storage.SaveAllBeverages(Beverages);
         }
 
         public List<Beverage> GetBeverages()

@@ -23,7 +23,8 @@ namespace CellarManager
                 Console.WriteLine("[1] Add Beer");
                 Console.WriteLine("[2] Add Wine");
                 Console.WriteLine("[3] Show all beverages");
-                Console.WriteLine("[4] Exit\n");
+                Console.WriteLine("[4] Delete");
+                Console.WriteLine("[5] Exit\n");
                 Console.WriteLine("Insert");
                 var choice = Console.ReadLine();
                 switch (choice)
@@ -39,8 +40,13 @@ namespace CellarManager
                     case "3":
                         Console.Clear();
                         GetBeveragesGui();
+                        Console.WriteLine("\nPress any key to exit.");
+                        Console.ReadKey();
                         break;
                     case "4":
+                        Console.Clear();
+                        DeleteBeverageGui();
+                    case "5":
                         Environment.Exit(0);
                         break;
                     default:
@@ -49,6 +55,49 @@ namespace CellarManager
                 Console.Clear();
             }
         }
+
+        //int? year = int.TryParse(Console.ReadLine(), out int yearValue) ? yearValue : null;
+
+        //private int ParseInt(string? input)
+        //{
+        //    int result = -1; //valore default
+
+        //    try
+        //    {
+        //        result = int.Parse(input ?? "0");
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //    }
+
+        //    return result;
+        //}
+
+        //private int ParseInt2(string? input)
+        //{
+        //    int result;
+
+        //    try
+        //    {
+        //        result = int.Parse(input ?? "0");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //        result = -1; //valore default
+        //    }
+
+        //    return result;
+        //}
+
+        //TryParse evitiamo di usare try e catch
+        //private int ParseInt3(string? input)
+        //{
+        //    var success = int.TryParse(input, out int result);
+        //    if(success) return result;
+        //    return 0;
+        //}
 
         internal void AddBeerGui()
         {
@@ -140,9 +189,9 @@ namespace CellarManager
                 }
                 while (formatStr != "1" && formatStr != "2");
 
-                Console.WriteLine("-----------------------");
-                Console.WriteLine("|    Your Confirm     |");
-                Console.WriteLine("-----------------------\n");
+                Console.Clear();
+
+                Console.WriteLine("----------------------\n|     Adding Beer     |\n----------------------\n");
                 Console.WriteLine($"Name: {name} - Alcoholic Degree: {degree}% - Type: {type} - Format: {format}\n");
                 Console.WriteLine("[1] Confirm");
                 Console.WriteLine("[2] Cancel");
@@ -278,10 +327,9 @@ namespace CellarManager
                     Console.WriteLine("Name cannot be empty");
                 }
 
+                Console.Clear();
 
-                Console.WriteLine("-----------------------");
-                Console.WriteLine("|    Your Confirm     |");
-                Console.WriteLine("-----------------------\n");
+                Console.WriteLine("----------------------\n|     Adding Beer     |\n----------------------\n");
                 Console.WriteLine($"Name: {name} - Alcoholic Degree: {degree}% - Type: {type} - Region: {region} - Year: {year}\n");
                 Console.WriteLine("[1] Confirm");
                 Console.WriteLine("[2] Cancel");
@@ -313,12 +361,20 @@ namespace CellarManager
         {
             Console.WriteLine("----------------\n| All Beverages |\n----------------\n");
             var beverages = _logic.GetBeverages();
-            foreach (var beverage in beverages)
+
+            for (int i = 0; i < beverages.Count; i++)
             {
-                Console.WriteLine(beverage.ToString());
+                var beverage = beverages[i];
+                Console.WriteLine($"[{i}] {beverage.ToString()}");
             }
-            Console.WriteLine("\nPress any key to exit.");
-            Console.ReadKey();
+            
+        }
+
+        internal void DeleteBeverageGui()
+        {
+            GetBeveragesGui();
+            Console.WriteLine("\nInsert number beverage to delete");
+            
         }
     }
 }

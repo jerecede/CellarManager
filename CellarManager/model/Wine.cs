@@ -21,7 +21,12 @@ namespace CellarManager.model
 
         public override string ToString()
         {
-            return $"{base.ToString()} - {Type} - {Region} - {Year}";
+            return $"WINE: {base.ToString()} - {Type} - {Region} - {Year}";
+        }
+
+        public override string ToCsv()
+        {
+            return $"Wine, {base.ToCsv()},,, {Type}, {Region}, {Year}";
         }
     }
 }

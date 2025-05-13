@@ -21,5 +21,10 @@ namespace CellarManager.model
         {
             return $"{Name} - {Degree}°";
         }
+
+        public virtual string ToCsv()
+        {
+            return $"{Name}, {Degree}";
+        }
     }
 }
