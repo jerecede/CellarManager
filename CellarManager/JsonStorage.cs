@@ -18,28 +18,34 @@ namespace CellarManager
                 string json = File.ReadAllText("beverages.json");
                 var dicts = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(json);
                 List<Beverage> beverages = new List<Beverage>();
-                foreach (var dict in dicts)
+                if(dicts != null)
                 {
-                    if (dict["Class"] == "Beer")
+                    foreach (var dict in dicts)
                     {
-                        TypeBeer type = (TypeBeer)Enum.Parse(typeof(TypeBeer), dict["TypeBeer"]);
-                        FormatBeer format = (FormatBeer)Enum.Parse(typeof(FormatBeer), dict["FormatBeer"]);
-                        beverages.Add(new Beer(dict["Name"], double.Parse(dict["Degree"]), type, format));
+                        if (dict["Class"] == "Beer")
+                        {
+                            TypeBeer type = (TypeBeer)Enum.Parse(typeof(TypeBeer), dict["TypeBeer"]);
+                            FormatBeer format = (FormatBeer)Enum.Parse(typeof(FormatBeer), dict["FormatBeer"]);
+                            beverages.Add(new Beer(dict["Name"], double.Parse(dict["Degree"]), type, format));
+                        }
+                        else if (dict["Class"] == "Wine")
+                        {
+                            TypeWine type = (TypeWine)Enum.Parse(typeof(TypeWine), dict["TypeWine"]);
+                            beverages.Add(new Wine(dict["Name"], double.Parse(dict["Degree"]), type, dict["RegionWine"], int.Parse(dict["YearWine"])));
+                        }
                     }
-                    else if (dict["Class"] == "Wine")
-                    {
-                        TypeWine type = (TypeWine)Enum.Parse(typeof(TypeWine), dict["TypeWine"]);
-                        beverages.Add(new Wine(dict["Name"], double.Parse(dict["Degree"]), type, dict["RegionWine"], int.Parse(dict["YearWine"])));
-                    }
+                    return beverages;
                 }
-                return beverages;
             }
             return [];
         }
 
         public void SaveAllBeverages(List<Beverage> beverages)
         {
-            //dictionary perche l'oggetto può variare da Wine e Beer
+            //dictionary perche l'oggetto può variare da Wine e Beer,
+            
+            //ma in realta dovevano esserci tutti i campi condivisi come nel cdv x_x
+
             List<Dictionary<string, string>> dicts = [];
             foreach (var bev in beverages)
             {

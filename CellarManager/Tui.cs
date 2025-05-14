@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using CellarManager.model;
 
 namespace CellarManager
@@ -23,7 +24,7 @@ namespace CellarManager
                 Console.WriteLine("[1] Add Beer");
                 Console.WriteLine("[2] Add Wine");
                 Console.WriteLine("[3] Show all beverages");
-                Console.WriteLine("[4] Delete");
+                Console.WriteLine("[4] Delete a beverage");
                 Console.WriteLine("[5] Exit\n");
                 Console.WriteLine("Insert");
                 var choice = Console.ReadLine();
@@ -46,6 +47,7 @@ namespace CellarManager
                     case "4":
                         Console.Clear();
                         DeleteBeverageGui();
+                        break;
                     case "5":
                         Environment.Exit(0);
                         break;
@@ -262,7 +264,7 @@ namespace CellarManager
                     }
                     else
                     {
-                        Console.WriteLine("Degree have to be a number");
+                        Console.WriteLine("You have to insert a number");
                     }
                 }
 
@@ -311,7 +313,7 @@ namespace CellarManager
                     }
                     else
                     {
-                        Console.WriteLine("Degree have to be a number");
+                        Console.WriteLine("You have to insert a number");
                     }
                 }
 
@@ -373,8 +375,61 @@ namespace CellarManager
         internal void DeleteBeverageGui()
         {
             GetBeveragesGui();
-            Console.WriteLine("\nInsert number beverage to delete");
-            
+            Console.WriteLine("\nInsert number beverage to delete (-1 cancel operation)");
+
+            int index = -1;
+
+            while (true)
+            {
+                var indexStr = Console.ReadLine();
+
+                if (int.TryParse(indexStr, out index) && !string.IsNullOrEmpty(indexStr))
+                {
+                    if (index >= 0 && index < _logic.GetBeverages().Count)
+                    {
+                        break;
+                    }
+                    else if(index == -1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"number {index} doesnt exist");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("You have to insert a number");
+                }
+            }
+
+            if(index != -1)
+            {
+                Console.Clear();
+                Console.WriteLine($"Are you sure you want to delete beverage number {index}\n");
+                Console.WriteLine("[1] Confirm");
+                Console.WriteLine("[2] Cancel");
+                Console.WriteLine("Insert");
+                var confirm = "";
+                do
+                {
+                    confirm = Console.ReadLine();
+                    switch (confirm)
+                    {
+                        case "1":
+                            _logic.DeleteBeverage(index);
+                            Console.WriteLine("\nDone!");
+                            Console.ReadKey();
+                            break;
+                        case "2":
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                while (confirm != "1" && confirm != "2");
+            }
         }
     }
 }
